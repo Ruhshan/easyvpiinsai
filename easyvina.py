@@ -8,7 +8,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-from importer import receptorImport
+from importer import receptorImport,ligandsImport
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -24,6 +24,7 @@ class Ui_mainwindow(object):
         mainwindow.setObjectName(_fromUtf8("mainwindow"))
         mainwindow.setWindowModality(QtCore.Qt.NonModal)
         mainwindow.resize(424, 384)
+        mainwindow.setMaximumSize(424,384)
         mainwindow.setWindowOpacity(100.0)
         
         mainwindow.setAutoFillBackground(True)
@@ -75,12 +76,10 @@ class Ui_mainwindow(object):
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         
-        self.ligFolder = QtGui.QLabel(self.widget)
-        self.ligFolder.setText(_fromUtf8("Ligand folder"))
-        self.ligFolder.setAlignment(QtCore.Qt.AlignCenter)
-        self.ligFolder.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
-        self.ligFolder.setObjectName(_fromUtf8("ligFolder"))
-        self.gridLayout.addWidget(self.ligFolder, 1, 2, 1, 1)
+        self.ligandbox = QtGui.QComboBox(self.widget)
+        self.ligandbox.addItems(["Ligand List"])
+        self.ligandbox.setObjectName(_fromUtf8("ligandbox"))
+        self.gridLayout.addWidget(self.ligandbox, 1, 2, 1, 1)
         
         self.addLigand = QtGui.QPushButton(self.widget)
         self.addLigand.setText(_fromUtf8("Add Ligands"))
@@ -240,12 +239,14 @@ class Ui_mainwindow(object):
     	self.recCheckbox.setCheckable(True)
     	self.recCheckbox.setCheckState(QtCore.Qt.Checked)
     	self.postMessage(outputMessage)
+    
     def addLigandActions(self):
-    	folderName="Zincs"
-    	outputMessage="Folder: "+folderName+" Added"
-    	self.ligFolder.setText(folderName)
+    	lImport=ligandsImport()
+    	ligandlist=lImport.init()
+    	outputMessage=str(len(ligandlist))+" Ligands Added"
     	self.ligCheckbox.setCheckable(True)
     	self.ligCheckbox.setCheckState(QtCore.Qt.Checked)
+    	self.ligandbox.addItems(ligandlist)
     	self.postMessage(outputMessage)
 
     def postMessage(self,outputMessage):
