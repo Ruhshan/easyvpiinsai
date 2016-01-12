@@ -5,7 +5,7 @@ from PyQt4 import QtGui
 
 class receptorImport(QtGui.QWidget):
 	def init(self):
-		fname = str(QtGui.QFileDialog.getOpenFileName(self, 'Open file','/home',"PDBQT (*.pdbqt)"))
+		fname = str(QtGui.QFileDialog.getOpenFileName(self, 'Open Receptor','/home',"PDBQT (*.pdbqt)"))
 		os.system("mkdir resources/receptor")
 		os.system("cp "+fname+" resources/receptor/")
 		fname=fname[fname.rindex('/')+1:]
@@ -16,7 +16,7 @@ class ligandsImport(QtGui.QWidget):
 		os.system("mkdir resources/ligands")
 		paths=[]
 		names=[]
-		for path in QtGui.QFileDialog.getOpenFileNames(self, "Ligands","/home","PDBQT (*.pdbqt)"):
+		for path in QtGui.QFileDialog.getOpenFileNames(self, "Open Ligands","/home","PDBQT (*.pdbqt)"):
 			paths.append(str(path))
 		
 		for path in paths:

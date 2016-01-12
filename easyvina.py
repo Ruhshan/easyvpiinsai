@@ -77,7 +77,8 @@ class Ui_mainwindow(object):
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         
         self.ligandbox = QtGui.QComboBox(self.widget)
-        self.ligandbox.addItems(["Ligand List"])
+        self.ligandbox.addItems(["       Ligand List"])
+        self.ligandbox.currentIndexChanged.connect(self.resetComboBox)
         self.ligandbox.setObjectName(_fromUtf8("ligandbox"))
         self.gridLayout.addWidget(self.ligandbox, 1, 2, 1, 1)
         
@@ -117,7 +118,7 @@ class Ui_mainwindow(object):
         self.gridLayout.addWidget(self.ligCheckbox, 1, 3, 1, 1)
         
         self.widget1 = QtGui.QWidget(mainwindow)
-        self.widget1.setGeometry(QtCore.QRect(9, 88, 406, 155))
+        self.widget1.setGeometry(QtCore.QRect(9, 68, 406, 155))
         self.widget1.setObjectName(_fromUtf8("widget1"))
         
         self.verticalLayout = QtGui.QVBoxLayout(self.widget1)
@@ -248,6 +249,8 @@ class Ui_mainwindow(object):
     	self.ligCheckbox.setCheckState(QtCore.Qt.Checked)
     	self.ligandbox.addItems(ligandlist)
     	self.postMessage(outputMessage)
+    def resetComboBox(self):
+    	self.ligandbox.setCurrentIndex(0)
 
     def postMessage(self,outputMessage):
     	global message
