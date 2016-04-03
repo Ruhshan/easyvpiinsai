@@ -9,6 +9,7 @@
 
 from PyQt4 import QtCore, QtGui
 from importer import receptorImport,ligandsImport
+from configman import ConfigManager
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -62,7 +63,7 @@ class Ui_mainwindow(object):
         
         self.outputArea = QtGui.QLabel(self.scrollAreaWidgetContents)
         self.outputArea.setGeometry(QtCore.QRect(0, 0, 281, 81))
-        self.outputArea.setMaximumSize(QtCore.QSize(281, 200))
+        self.outputArea.setMaximumSize(QtCore.QSize(281, 2000))
         #self.outputArea.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);"))
         self.outputArea.setText(_fromUtf8(message))
         self.outputArea.setObjectName(_fromUtf8("outputArea"))
@@ -231,6 +232,7 @@ class Ui_mainwindow(object):
 
         self.addReceptor.clicked.connect(self.addReceptorActions)
         self.addLigand.clicked.connect(self.addLigandActions)
+        self.createConfig.clicked.connect(self.createConfigActions)
     
     def addReceptorActions(self):
     	rImport=receptorImport()
@@ -251,6 +253,26 @@ class Ui_mainwindow(object):
     	self.postMessage(outputMessage)
     def resetComboBox(self):
     	self.ligandbox.setCurrentIndex(0)
+
+    def createConfigActions(self):
+    	coordinates=[]
+    	coordinates.append(str(self.cx.text()))
+    	coordinates.append(str(self.cy.text()))
+    	coordinates.append(str(self.cz.text()))
+
+    	sizes=[]
+    	sizes.append(str(self.sx.text()))
+    	sizes.append(str(self.sy.text()))
+    	sizes.append(str(self.sz.text()))
+
+    	configinstance=ConfigManager(coordinates, sizes)
+    	
+    	coordcheckresponse=configinstance.checkcords()
+    	for resps in coordcheckresponse:
+    		self.postMessage(resps)
+    	
+
+
 
     def postMessage(self,outputMessage):
     	global message
