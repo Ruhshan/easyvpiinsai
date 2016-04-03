@@ -6,7 +6,7 @@
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
-import os
+import os,time
 from PyQt4 import QtCore, QtGui
 from importer import receptorImport,ligandsImport
 from configman import ConfigManager
@@ -311,6 +311,9 @@ class Ui_mainwindow(object):
     		self.postMessage("baseconf not found")
     	if len(conf)==0:
     		self.postMessage("baseconf is empty")
+
+    	progressBarUnit=int(100/len(ligandlist))
+
     	if len(ligandlist)>0 and len(receptor)>0 and len(conf)>0:
     		for lig in ligandlist:
     			instance=Docker(receptor[0], lig, conf)
@@ -320,6 +323,9 @@ class Ui_mainwindow(object):
     			except:
     				self.postMessage("Error with "+lig+" config creation")
     				break
+    			instance.dock()
+    			#self.progressBarUpdate(progressBarUnit)
+
 
 
     	
@@ -333,6 +339,11 @@ class Ui_mainwindow(object):
     	message=message.replace("</body></html>","")
     	message=message+"<p style=font-size:12px>"+outputMessage+"</body></html>"
     	self.outputArea.setText(message)
+    def progressBarUpdate(self, unit):
+    	curr=self.progressBar.value()
+    	for i in range(unit):
+    		self.progressBar.setProperty("value", curr+i)
+    		#time.sleep(0.02)
 
 
     def retranslateUi(self, mainwindow):

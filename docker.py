@@ -1,4 +1,5 @@
 import os
+import time
 class Docker:
 	def __init__(self, receptor, ligand, conf):
 		##creates the folder experiment and copies vina binary
@@ -9,6 +10,7 @@ class Docker:
 		self.receptor=receptor
 		self.ligand=ligand
 		self.conf=conf
+		self.newconffilename=""
 	
 	def copyfiles(self):
 		os.system("cp resources/receptor/" +self.receptor+" resources/experiment/")
@@ -21,12 +23,17 @@ class Docker:
 		newconf+=self.conf
 		newconf+="out = "+self.receptor.replace(".pdbqt","_")+self.ligand.replace(".pdbqt","_complex.pdbqt")
 
-		newconffilename=self.ligand.replace(".pdbqt",".conf")
-		writer=open("resources/experiment/"+newconffilename,"w")
+		self.newconffilename=self.ligand.replace(".pdbqt",".conf")
+		writer=open("resources/experiment/"+self.newconffilename,"w")
 		writer.write(newconf)
 		writer.close()
 
-		return newconffilename+" created!"
+		return self.newconffilename+" created!"
+	def dock(self):
+		os.chdir("resources/experiment/")
+		os.system("./vina --config "+self.newconffilename)
+		os.system("cd ../..")
+
 
 
 
