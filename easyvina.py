@@ -6,10 +6,11 @@
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
-
+import os
 from PyQt4 import QtCore, QtGui
 from importer import receptorImport,ligandsImport
 from configman import ConfigManager
+from docker import Docker
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -32,7 +33,7 @@ class Ui_mainwindow(object):
         
         self.progressBar = QtGui.QProgressBar(mainwindow)
         self.progressBar.setGeometry(QtCore.QRect(9, 350, 401, 25))
-        self.progressBar.setProperty("value", 30)
+        self.progressBar.setProperty("value", 0)
         self.progressBar.setTextVisible(False)
         self.progressBar.setFormat(_fromUtf8("%p%"))
         self.progressBar.setObjectName(_fromUtf8("progressBar"))
@@ -233,6 +234,9 @@ class Ui_mainwindow(object):
         self.addReceptor.clicked.connect(self.addReceptorActions)
         self.addLigand.clicked.connect(self.addLigandActions)
         self.createConfig.clicked.connect(self.createConfigActions)
+        self.recCheckbox.clicked.connect(self.recCheckboxAction)
+        self.ligCheckbox.clicked.connect(self.ligCheckboxAction)
+        self.dock.clicked.connect(self.dockActions)
     
     def addReceptorActions(self):
     	rImport=receptorImport()
@@ -270,7 +274,57 @@ class Ui_mainwindow(object):
     	coordcheckresponse=configinstance.checkcords()
     	for resps in coordcheckresponse:
     		self.postMessage(resps)
+
+    	sizecheckresponse=configinstance.checksizes()
+    	for resps in sizecheckresponse:
+    		self.postMessage(resps)
+    	if "Okay" in coordcheckresponse[0] and "Okay" in sizecheckresponse[0]:
+    		writeresponse=configinstance.writefile()
+    		self.postMessage(writeresponse)
+
+    def recCheckboxAction(self):
+    	if self.recCheckbox.isCheckable()==True:
+    		self.recCheckbox.setCheckState(QtCore.Qt.Checked)
+
+    def ligCheckboxAction(self):
+    	if self.ligCheckbox.isCheckable()==True:
+    		self.ligCheckbox.setCheckState(QtCore.Qt.Checked)
+
+    def dockActions(self):
+    	try:
+    		ligandlist=os.listdir("resources/ligands")
+    	except:
+    		self.postMessage("ligands folder not found!")
+
+    	try:
+    		receptor=os.listdir("resources/receptor")
+    	except:
+    		self.postMessage("receptor folder not found!")
+
+    	if len(ligandlist)==0:
+    		self.postMessage("ligands folder empty!")
+    	if len(receptor)==0:
+    		self.postMessage("receptor folder empty!")
+    	try:
+    		conf=file("resources/baseconf").read()
+    	except:
+    		self.postMessage("baseconf not found")
+    	if len(conf)==0:
+    		self.postMessage("baseconf is empty")
+    	if len(ligandlist)>0 and len(receptor)>0 and len(conf)>0:
+    		for lig in ligandlist:
+    			instance=Docker(receptor[0], lig, conf)
+    			try:
+    				response=instance.copyfiles()
+    				self.postMessage(response)
+    			except:
+    				self.postMessage("Error with "+lig+" config creation")
+    				break
+
+
     	
+
+
 
 
 
