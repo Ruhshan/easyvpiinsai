@@ -1,5 +1,6 @@
 import os
 import time
+import subprocess
 class Docker:
 	def __init__(self, receptor, ligand, conf):
 		##creates the folder experiment and copies vina binary
@@ -30,9 +31,13 @@ class Docker:
 
 		return self.newconffilename+" created!"
 	def dock(self):
+		path=os.getcwd()
 		os.chdir("resources/experiment/")
-		os.system("./vina --config "+self.newconffilename)
-		os.system("cd ../..")
+		#os.system("./vina --config "+self.newconffilename)
+		vina_execute=subprocess.Popen("./vina --config "+self.newconffilename,shell=True)
+		time.sleep(10)
+		vina_execute.kill()
+		os.chdir(path)
 
 
 

@@ -12,5 +12,7 @@
 # Please see http://vina.scripps.edu for more information.      #
 #################################################################
 
+WARNING: The search space volume > 27000 Angstrom^3 (See FAQ)
 Detected 4 CPUs
-Reading input ... 
+Reading input ... done.
+Setting up the scoring function ... done.

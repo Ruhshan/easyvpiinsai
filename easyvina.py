@@ -324,7 +324,7 @@ class Ui_mainwindow(object):
     				self.postMessage("Error with "+lig+" config creation")
     				break
     			instance.dock()
-    			#self.progressBarUpdate(progressBarUnit)
+    			self.progressBarUpdate(progressBarUnit)
 
 
 
