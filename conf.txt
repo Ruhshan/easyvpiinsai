@@ -1,6 +1,11 @@
-center_x = -54.445
+receptor = modeller_2.pdbqt
+
+center_x = -54.335
 center_y = 48.454
 center_z = 28.513
+
 size_x = 28
 size_y = 18
 size_z = 20
+
+num_modes = 10
