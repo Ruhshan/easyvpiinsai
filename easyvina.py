@@ -304,6 +304,7 @@ class Ui_mainwindow(object):
 		except:
 			self.postMessage("receptor folder not found!")
 
+<<<<<<< HEAD
 		if len(ligandlist)==0:
 			self.postMessage("ligands folder empty!")
 		if len(receptor)==0:
@@ -314,6 +315,19 @@ class Ui_mainwindow(object):
 			self.postMessage("baseconf not found")
 		if len(conf)==0:
 			self.postMessage("baseconf is empty")
+=======
+    	if len(ligandlist)>0 and len(receptor)>0 and len(conf)>0:
+    		for lig in ligandlist:
+    			instance=Docker(receptor[0], lig, conf)
+    			try:
+    				response=instance.copyfiles()
+    				self.postMessage(response)
+    			except:
+    				self.postMessage("Error with "+lig+" config creation")
+    				break
+    			instance.dock()
+    			self.progressBarUpdate(progressBarUnit)
+>>>>>>> 89ece6c59b633d377b6cfb3c77d713839c2f23c7
 
 		progressBarUnit=int(100/len(ligandlist))
 

@@ -12,12 +12,7 @@
 # Please see http://vina.scripps.edu for more information.      #
 #################################################################
 
+WARNING: The search space volume > 27000 Angstrom^3 (See FAQ)
 Detected 4 CPUs
 Reading input ... done.
 Setting up the scoring function ... done.
-<<<<<<< HEAD:resources/experiment/vitc.log
-Analyzing the binding site ... done.
-Using random seed: -2116037399
-Performing search ... 
-=======
->>>>>>> 89ece6c59b633d377b6cfb3c77d713839c2f23c7:resources/experiment/ZINC00688092.log
