@@ -33,19 +33,16 @@ class Docker:
 	def dock(self):
 		path=os.getcwd()
 		os.chdir("resources/experiment/")
-<<<<<<< HEAD
 		#print os.getcwd()
 		#os.system("./vina --config "+self.newconffilename)
 		vina_execute=subprocess.Popen("./vina --config "+self.newconffilename,shell=True)
 		#time.sleep(10)
 		#vina_execute.kill()
 		#os.killpg(os.getpgid(vina_execute.pid), signal.SIGTERM)
-=======
 		#os.system("./vina --config "+self.newconffilename)
 		vina_execute=subprocess.Popen("./vina --config "+self.newconffilename,shell=True)
 		time.sleep(10)
 		vina_execute.kill()
->>>>>>> 89ece6c59b633d377b6cfb3c77d713839c2f23c7
 		os.chdir(path)
 
 
